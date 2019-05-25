@@ -1,0 +1,14 @@
+import hector.*
+import cultivo.*
+
+program laGranjaGame {
+	method onPress.m(){ new Maiz }
+	method onPress.t(){ new Trigo }
+	method onPress.o(){ new Tomaco }
+	method onPress.r(){}
+	method onPress.c(){}
+	method onPress.v(){}
+	method onPress.space(){}
+}
+
+// mensaje de error: self.error("no hay planta para 'blank' ")
