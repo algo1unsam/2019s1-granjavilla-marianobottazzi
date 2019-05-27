@@ -1,14 +1,29 @@
 import hector.*
 import cultivo.*
+import wollok.game.*
 
 program laGranjaGame {
-	method onPress.m(){ new Maiz }
-	method onPress.t(){ new Trigo }
-	method onPress.o(){ new Tomaco }
-	method onPress.r(){}
-	method onPress.c(){}
-	method onPress.v(){}
-	method onPress.space(){}
+//	CONFIG	
+	game.title("La Granja de Hector")
+	game.height(10)
+	game.width(10)
+	game.ground("ground.png")
+//	VISUALES
+	game.addVisual(hector)
+//	TECLADO
+	keyboard.up().onPressDo{ hector.move(hector.position().up(1)); }
+	keyboard.down().onPressDo{ hector.move(hector.position().down(1)); }
+	keyboard.left().onPressDo{ hector.move(hector.position().left(1)); }
+	keyboard.right().onPressDo{ hector.move(hector.position().right(1)); }
+	keyboard.m().onPressDo{ hector.sembrar(new Maiz()) }
+	keyboard.t().onPressDo{ hector.sembrar(new Trigo()) }
+	keyboard.o().onPressDo{ hector.sembrar(new Tomaco()) }
+	keyboard.r().onPressDo{ hector.regar() }
+	keyboard.c().onPressDo{ hector.cosechar() }
+	keyboard.v().onPressDo{ hector.vender() }
+	keyboard.space().onPressDo{
+	}
+//	START
+	game.start()
 }
-
-// mensaje de error: self.error("no hay planta para 'blank' ")
+// mensaje de error: self.error("no hay planta para 'blank' ") 
