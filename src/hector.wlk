@@ -1,4 +1,5 @@
 import wollok.game.*
+import market.*
 
 object hector {
 
@@ -26,13 +27,15 @@ object hector {
 	}
 
 	method vender() {
-		if(game.colliders(self).hayMercado()) {
-			monedero = (game.colliders(self).enCaja() - paraVender.sum({ planta => planta.valor() })).max(0)
+		if (self.mercado().hayMercado()) {
+			monedero = (self.mercado().enCaja() - paraVender.sum({ planta => planta.valor() })).max(0)
+			self.mercado().enCaja(self.mercado().enCaja() - paraVender.sum({ planta => planta.valor() }).max(0))
 			paraVender.clear()
-			}
-		else self.error("aca no hay un mercado")
+		} else self.error("aca no hay un mercado")
 	}
-                   
+
+	method mercado() = game.colliders(self).first()
+
 	method informe() {
 		game.say(self, self.monedero())
 		game.say(self, self.paraVender())
