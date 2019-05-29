@@ -2,7 +2,6 @@ import wollok.game.*
 
 object hector {
 
-	var property plantasAca = #{}
 	var property paraVender = #{}
 	var property monedero = 0
 	var property position = game.at(4, 3)
@@ -15,33 +14,26 @@ object hector {
 
 	method sembrar(unaPlanta) {
 		unaPlanta.position(self.position())
-		unaPlanta.sembrar()
 		game.addVisual(unaPlanta)
 	}
 
-	method plantasAca() {
-		plantasAca.clear()
-		plantasAca.addAll({ game.colliders(self)})
-		plantasAca.remove(self)
-		return plantasAca
-	}
-
 	method regar() {
-		self.plantasAca()
-		if (!plantasAca.isEmpty()) plantasAca.forEach({ planta => planta.regar() }) else self.error("no tengo nada para regar")
+		if (!game.colliders(self).asSet().isEmpty()) game.colliders(self).forEach({ planta => planta.regar() }) else self.error("no tengo nada para regar")
 	}
 
 	method cosechar() {
-		self.plantasAca()
-		if (!plantasAca.isEmpty()) plantasAca.forEach({ planta => planta.cosechar() }) else self.error("no tengo nada para cosechar")
+		if (!game.colliders(self).asSet().isEmpty()) game.colliders(self).forEach({ planta => planta.cosechar() }) else self.error("no tengo nada para cosechar")
 	}
 
 	method vender() {
-		monedero = paraVender.sum({ planta => planta.valor() })
-		paraVender.clear()
+		if(game.colliders(self).hayMercado()) {
+			monedero = (game.colliders(self).enCaja() - paraVender.sum({ planta => planta.valor() })).max(0)
+			paraVender.clear()
+			}
+		else self.error("aca no hay un mercado")
 	}
-
-	method informa() {
+                   
+	method informe() {
 		game.say(self, self.monedero())
 		game.say(self, self.paraVender())
 	}

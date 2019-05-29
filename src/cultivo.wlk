@@ -3,7 +3,7 @@ import hector.*
 
 class Planta {
 
-	var property listaParaCosechar = false
+	method listaParaCosechar()
 
 	method cosechar() {
 		if (self.listaParaCosechar()) {
@@ -11,21 +11,22 @@ class Planta {
 			game.removeVisual(self)
 		}
 	}
-
+	method hayMercado() = false
 }
 
 class Maiz inherits Planta {
 
-	var property imagen = "corn_baby.png"
+	var property image = "corn_baby.png"
 	var property position = game.at(0, 0)
 	var property esAdulta = false
+	var property listaParaCosechar = false
 
-	method imagen() = "corn_baby.png"
+	method image() = "corn_baby.png"
 
 	method regar() {
 		if (!esAdulta) esAdulta = true
 		listaParaCosechar = true
-		self.imagen("corn_adult.png")
+		self.image("corn_adult.png")
 	}
 
 	method valor() = 150
@@ -34,18 +35,18 @@ class Maiz inherits Planta {
 
 class Trigo inherits Planta {
 
-	var property imagen = "wheat_0.png"
+	var property image = "wheat_0.png"
 	var property position = game.at(0, 0)
 	var property nivel = 0
 
 	method regar() {
-		if (nivel < 4) {
+		if (nivel < 3) {
 			nivel += 1
-			self.imagen("wheat_'nivel'.png")
+			self.image("wheat_"+nivel+".png")
 		}
 	}
 
-	override method listaParaCosechar() = nivel >= 2
+	override method listaParaCosechar() = nivel > 1
 
 	method valor() = 100 * (nivel - 1)
 
@@ -54,13 +55,13 @@ class Trigo inherits Planta {
 class Tomaco inherits Planta {
 
 	var property siempreLista = true
-	var property imagen = "tomaco.png"
+	var property image = "tomaco.png"
 	var property position = game.at(0, 0)
 
 	override method listaParaCosechar() = siempreLista
 
 	method regar() {
-		self.position().up(1)
+		position = self.position().up(1)
 	}
 
 	method valor() = 80

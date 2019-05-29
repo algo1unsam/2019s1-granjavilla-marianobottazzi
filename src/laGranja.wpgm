@@ -1,5 +1,6 @@
 import hector.*
 import cultivo.*
+import market.*
 import wollok.game.*
 
 program laGranjaGame {
@@ -10,6 +11,9 @@ program laGranjaGame {
 	game.ground("ground.png")
 //	VISUALES
 	game.addVisual(hector)
+	game.addVisual(new Market(enCaja = 1000, x = 1, y = 6))
+	game.addVisual(new Market(enCaja = 500, x = 5, y = 6))
+	game.addVisual(new Market(enCaja = 3000, x = 9, y = 6))
 //	TECLADO
 	keyboard.up().onPressDo{ hector.move(hector.position().up(1)); }
 	keyboard.down().onPressDo{ hector.move(hector.position().down(1)); }
@@ -21,8 +25,7 @@ program laGranjaGame {
 	keyboard.r().onPressDo{ hector.regar() }
 	keyboard.c().onPressDo{ hector.cosechar() }
 	keyboard.v().onPressDo{ hector.vender() }
-	keyboard.space().onPressDo{
-	}
+	keyboard.space().onPressDo{ hector.informe() }
 //	START
 	game.start()
 }
