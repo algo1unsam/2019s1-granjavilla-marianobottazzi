@@ -34,6 +34,7 @@ object hector {
 				paraVender.clear()
 			} else self.error("ahi no hay un mercado")
 		else self.error("aca no hay un mercado")
+//		else game.errorReporter("aca no hay mercado")
 	}
 	
 	method mercado() = game.colliders(self).first()
