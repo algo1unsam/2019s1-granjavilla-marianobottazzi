@@ -14,8 +14,11 @@ object hector {
 	}
 
 	method sembrar(unaPlanta) {
-		unaPlanta.position(self.position())
-		game.addVisual(unaPlanta)
+		if(!self.mercado().hayMercado()){	
+			unaPlanta.position(self.position())
+			game.addVisual(unaPlanta)
+			}
+		else self.error("aca no se puede plantar")
 	}
 
 	method regar() {
