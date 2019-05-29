@@ -27,13 +27,15 @@ object hector {
 	}
 
 	method vender() {
-		if (self.mercado().hayMercado()) {
-			monedero = (self.mercado().enCaja() - paraVender.sum({ planta => planta.valor() })).max(0)
-			self.mercado().enCaja(self.mercado().enCaja() - paraVender.sum({ planta => planta.valor() }).max(0))
-			paraVender.clear()
-		} else self.error("aca no hay un mercado")
+		if(!game.colliders(self).asSet().isEmpty())
+			if (self.mercado().hayMercado()) {
+				monedero = paraVender.sum({ planta => planta.valor() }).max(self.mercado().enCaja()) 
+				self.mercado().enCaja(self.mercado().enCaja() - paraVender.sum({ planta => planta.valor() }).min(0))
+				paraVender.clear()
+			} else self.error("ahi no hay un mercado")
+		else self.error("aca no hay un mercado")
 	}
-
+	
 	method mercado() = game.colliders(self).first()
 
 	method informe() {
