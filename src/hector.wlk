@@ -16,12 +16,17 @@ object hector {
 	}
 
 	method sembrar(unaPlanta) {
-		if (self.objetosAca().first().hayMercado()) 
-			self.error("aca no se puede plantar")
-		else {
+		if (self.objetosAca().asSet().isEmpty()) {
 			unaPlanta.position(self.position())
 			game.addVisual(unaPlanta)
-		}	
+			}
+		else {
+			if(!self.objetosAca().first().hayMercado()) {
+				unaPlanta.position(self.position())
+				game.addVisual(unaPlanta)
+				}
+			else self.error("aca no se puede plantar")
+		}
 	}
 
 	method regar() {
@@ -41,9 +46,11 @@ object hector {
 		else self.error("ahi no hay un mercado")
 	}
 
+	method mochila() = paraVender.size()
+
 	method informe() {
-		game.say(self, self.monedero())
-		game.say(self, self.paraVender())
+		game.say(self, "tengo "+self.monedero()+" monedas de oro")
+		game.say(self, "y tengo "+self.mochila()+" plantas para vender")
 	}
 
 }
