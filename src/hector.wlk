@@ -10,13 +10,15 @@ object hector {
 	method image() = "player.png"
 
 	method objetosAca() = game.colliders(self)
+	
+	method acaNoHayNada() = self.objetosAca().asSet().isEmpty()
 
 	method move(nuevaPosicion) {
 		self.position(nuevaPosicion)
 	}
 
 	method sembrar(unaPlanta) {
-		if (self.objetosAca().asSet().isEmpty()) {
+		if (self.acaNoHayNada()) {
 			unaPlanta.position(self.position())
 			game.addVisual(unaPlanta)
 			}
@@ -30,15 +32,15 @@ object hector {
 	}
 
 	method regar() {
-		if (!self.objetosAca().asSet().isEmpty()) game.colliders(self).forEach({ planta => planta.regar() }) else self.error("no tengo nada para regar")
+		if (!self.acaNoHayNada()) game.colliders(self).forEach({ planta => planta.regar() }) else self.error("no tengo nada para regar")
 	}
 
 	method cosechar() {
-		if (!self.objetosAca().asSet().isEmpty()) game.colliders(self).forEach({ planta => planta.cosechar() }) else self.error("no tengo nada para cosechar")
+		if (!self.acaNoHayNada()) game.colliders(self).forEach({ planta => planta.cosechar() }) else self.error("no tengo nada para cosechar")
 	}
 
 	method vender() {
-		if (!self.objetosAca().asSet().isEmpty()) {
+		if (!self.acaNoHayNada()) {
 			monedero = paraVender.sum({ planta => planta.valor() }).min(self.objetosAca().first().enCaja())
 			self.objetosAca().first().enCaja((self.objetosAca().first().enCaja() - paraVender.sum({ planta => planta.valor() })).max(0))
 			paraVender.clear()
